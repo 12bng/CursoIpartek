@@ -1,6 +1,8 @@
 package com.ipartek.formacion.uf2216.prueba;
 
 import java.util.*;
+//import java.util.Map.Entry;
+import java.util.Map.Entry;
 
 public class Lenguaje {
 	
@@ -61,14 +63,80 @@ public class Lenguaje {
 		System.out.println(5 << 1);
 		System.out.println(10 >>> 1);
 		System.out.println(-5 >>> 1);
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		
+		
+		
+		//switch soporta Enteros y char
+		//java 5 soporta ademas string
+		
+		String opcion = "uno";
+		switch(opcion) {
+		case "uno":  System.out.println(1); break;
+		case "dos":  System.out.println(2); break;
+		case "tres": System.out.println(3); break;
+		}
+		
+		
+		//switch
+		int mes = 5, dias;
+		switch(mes) {
+		case 2: dias = 28; break;
+		case 4:
+		case 6:
+		case 9:
+		case 11: dias =30; break;
+		default: dias = 31;
+		}
+		System.out.println(dias);
+		
+		
+		//dowhile
+		int x=1;
+		do {
+			System.out.println(x++);
+		} while(x<=10);
+		
+		
+		//for autorrecorrido
+		System.out.println("for autorrecorrido");
+		int[] enteros = {5,2,3,5,4,8,7,9};
+		for(int entero: enteros) {
+			System.out.println(entero);
+		}
+		
+		//Diccionario
+		HashMap<String,String> diccionario = new HashMap<String,String>();
+		diccionario.put("casa", "home");
+		diccionario.put("coche", "bus");
+		diccionario.put("coche", "car");
+		System.out.println(diccionario.get("coche"));
+		
+		System.out.println(diccionario.keySet());
+		System.out.println(diccionario.values());
+		for(String valor: diccionario.values()) {
+		System.out.println(valor);
+		}
+		
+		
+		String linea;
+		for(Entry<String,String> par: diccionario.entrySet()) {
+			linea= String.format("(%s,%s, args)", par.getKey(), par.getValue());
+			System.out.println(linea);
+		}
+		
+		//conversiones
+		String sNumero ="5";
+		int iNumero = Integer.parseInt(sNumero);
+		System.out.println(iNumero);
+		String texto = String.valueOf(iNumero);
+		System.out.println(texto);
 		
 	}
+		
 	
-	public void cuenta() {
-		nombres.add("Mikel");
-	}
+//	public void cuenta() {
+//		nombres.add("Mikel");
+//		// grupo gfi norte, informatica euskadi (ide), ibermatica, serikat, gertek, ipartek serv inform
+//	}
 
 }
