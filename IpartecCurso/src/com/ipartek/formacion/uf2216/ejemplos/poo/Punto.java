@@ -1,6 +1,6 @@
-package poo;
+package com.ipartek.formacion.uf2216.ejemplos.poo;
 
-public class Punto {
+public class Punto { // extends Object
 	// Constantes
 	private static final int MINIMO_X = -100;
 	private static final int MAXIMO_X = 100;
@@ -38,7 +38,7 @@ public class Punto {
 
 	public void setX(int x) {
 		if(x > MAXIMO_X || x < MINIMO_X) {
-			throw new RuntimeException("No se admite el valor " + x);
+			throw new PooException("No se admite el valor " + x);
 		}
 		
 		this.x = x;
@@ -52,18 +52,23 @@ public class Punto {
 		this.y = y;
 	}
 	
-	public String getXY() {
-		return String.format("P(%s,%s)", getX(), getY());
+	@Override
+	public String toString() {
+		return transformarATexto(Formatos.COMPLEJO);
 	}
 	
-	public String getXY(boolean formatoComplejo) {
-		return formatoComplejo ? getXY(Formatos.COMPLEJO): getXY(Formatos.SIMPLE);
+	public String toString(boolean formatoComplejo) {
+		return formatoComplejo ? this.transformarATexto(Formatos.COMPLEJO): this.transformarATexto(Formatos.SIMPLE);
 	}
 	
-	public String getXY(Formatos formato) {
+	public String toString(Formatos formato) {
+		return transformarATexto(formato);
+	}
+	
+	private String transformarATexto(Formatos formato) {
 		switch(formato) {
 		case SIMPLE: return String.format("%s,%s", getX(), getY());
-		case COMPLEJO: return getXY();
+		case COMPLEJO: return String.format("P(%s,%s)", getX(), getY());
 		default: throw new RuntimeException("Formato no reconocido");
 		}
 	}

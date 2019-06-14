@@ -1,6 +1,6 @@
-package poo;
+package com.ipartek.formacion.uf2216.ejemplos.poo;
 
-import poo.Punto.Formatos;
+import com.ipartek.formacion.uf2216.ejemplos.poo.Punto.Formatos;
 
 public class PuntoPrueba {
 	public static void main(String[]args) {
@@ -8,22 +8,26 @@ public class PuntoPrueba {
 		
 		pt1 = new Punto();
 		
-		pt1.setX(-40); pt1.setY(7);
+		try {
+			pt1.setX(-400); pt1.setY(7);
+		} catch (PooException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		System.out.println(pt1);
 		System.out.println(pt1.getX());
 		System.out.println(pt1.getY());
 		
 		System.out.println(String.format("P(%s,%s)", pt1.getX(), pt1.getY()));
-		System.out.println(pt1.getXY());
+		System.out.println(pt1.toString());
 		
 		pt1.setXY(1, 2);
-		System.out.println(pt1.getXY());
+		System.out.println(pt1.toString());
 		
 		Punto pt2 = new Punto(8,9);
 		
-		System.out.println(pt2.getXY(Formatos.SIMPLE));
-		System.out.println(pt2.getXY(true));
+		System.out.println(pt2.toString(Formatos.SIMPLE));
+		System.out.println(pt2.toString(true));
 		
 //		System.out.println(5);
 //		System.out.println(new java.util.Date());
@@ -34,6 +38,6 @@ public class PuntoPrueba {
 		
 		Punto pt3 = new Punto();
 		
-		System.out.println(pt3.getXY());
+		System.out.println(pt3.toString());
 	}
 }
