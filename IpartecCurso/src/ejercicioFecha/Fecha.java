@@ -45,6 +45,7 @@ public class Fecha {
 	}
 
 	public void setMes(int mes) {
+		if(mes>12||mes<1) {throw new FechaException("El mes ha de ser un número entre 1 y 12", new Throwable("Mes incorrecto"));}
 		this.mes = mes;
 	}
 
@@ -53,6 +54,11 @@ public class Fecha {
 	}
 
 	public void setDia(int dia) {
+		if(dia<1) {throw new FechaException("El día no puede ser inferior a 1", new Throwable("Día incorrecto"));}
+		if((mes==1||mes==3||mes==5||mes==7||mes==8||mes==10||mes==12)&&(dia>31)) {throw new FechaException("El día máximo para este mes es 31", new Throwable("Día incorrecto"));}
+		if((mes==4||mes==6||mes==5||mes==7||mes==8||mes==10||mes==12)&&(dia>30)) {throw new FechaException("El dia máximo para este mes es 30", new Throwable("Día incorrecto"));}
+		if(esBisiesto()&&(dia>29)) {throw new FechaException("El diía máximo para febrero en año bisiesto es 29", new Throwable("Día incorrecto"));}
+		if(!esBisiesto()&&(dia>28)) {throw new FechaException("El día máximo para febrero en año no bisiesto es 28", new Throwable("Día incorrecto"));}
 		this.dia = dia;
 	}
 
@@ -75,13 +81,14 @@ public class Fecha {
 	}
 
 	public boolean equals(Object o) {
+		boolean esIgual = true;
 		if(o instanceof Fecha) {
-			boolean esIgual =true;
 			if(!( ((Fecha)o).getAño()==this.año))  {esIgual=false;}
 			else if(!( ((Fecha)o).getMes()==this.mes)){esIgual=false;}
 			else if(!( ((Fecha)o).getDia()==this.dia)){esIgual=false;}
-		};
-		return true;
+		}
+		else {esIgual=false;}
+		return esIgual;
 		
 	}
 
