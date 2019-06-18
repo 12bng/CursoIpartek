@@ -8,18 +8,18 @@ public class Operacion {
 
 	public static void main(String[] args) {
 		// TODO
-		mostrarPrimos(50, 10);
 	}
 
 	private static long combinaciones(int grupos, int total) {
-		long combinaciones = factorial(grupos, false) / (factorial(grupos - total, false) * factorial(total, false));
+		// total==m grupos==n
+		long combinaciones = factorial(total, false) / (factorial(total - grupos, false) * factorial(grupos, false));
 		System.out.println(combinaciones);
 		return combinaciones;
 
 	}
 
 	private static long factorial(int x, boolean mostrar) {
-		int aux = 1;
+		long aux = 1;
 		StringBuffer log = new StringBuffer();
 		for (int i = 1; i <= x; i++) {
 			if (i > 1) {
@@ -37,7 +37,7 @@ public class Operacion {
 
 	private static boolean esPrimo(int numero) {
 		boolean primo = true;
-		int aux = numero - 1;
+		long aux = numero - 1;
 		while (primo && aux > 1) {
 			if (numero % aux == 0) {
 				primo = false;
@@ -53,7 +53,7 @@ public class Operacion {
 	}
 
 	private static void fibonacci(int num_factores) {
-		int aux1 = 0, aux2 = 1, aux3;
+		long aux1 = 0, aux2 = 1, aux3;
 		for (int i = 0; i < num_factores; i++) {
 			aux3 = aux1;
 			aux1 = aux2 + aux1;
@@ -63,7 +63,7 @@ public class Operacion {
 	}
 
 	private static void mostrarDivisores(int numero) {
-		int aux = numero;
+		long aux = numero;
 		System.out.println("Divisores:");
 		while (aux > 0) {
 			if (numero % aux == 0) {
@@ -74,7 +74,7 @@ public class Operacion {
 	}
 
 	private static void mostrarDivisores(int numero, boolean primos) {
-		int aux = numero;
+		long aux = numero;
 		System.out.println("Divisores:");
 		while (aux > 0) {
 			if (!primos) {
@@ -83,7 +83,7 @@ public class Operacion {
 
 			if (primos) {
 				if (numero % aux == 0) {
-					if (esPrimo(aux))
+					if (esPrimo((int) aux))
 						System.out.println(aux);
 				}
 			}
@@ -108,5 +108,34 @@ public class Operacion {
 			System.out.println(num_ini);
 		}
 
+	}
+
+	private static long permutaciones(int num_elementos) {
+		long aux = factorial(num_elementos, false);
+		System.out.println(aux);
+		return aux;
+	}
+
+	private static double potencia(int base, int potencia) {
+		double aux = 1;
+		if (potencia > 0) {
+			while (potencia > 0) {
+				aux = aux * base;
+				potencia--;
+			}
+		}
+		if (potencia < 0) {
+			while (potencia < 0) {
+				aux = aux / base;
+				potencia++;
+			}
+		}
+		System.out.println(aux);
+		return aux;
+	}
+
+	private static long variaciones(int grupos, int total) {
+		// total==m grupos==n
+		return factorial(total, false) / factorial(total - grupos, false);
 	}
 }
