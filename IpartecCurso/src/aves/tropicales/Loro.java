@@ -18,7 +18,10 @@ public class Loro extends Ave {
 	}
 
 	public void deDondeEres() {
-		System.out.println(region.name());
+		try {
+		System.out.println(region.name());}
+		finally {}
+		
 	}
 
 	public void setRegion(cardinales region) {

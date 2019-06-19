@@ -12,5 +12,6 @@ excepción explícita?
 2. ¿Qué opción escogerías en la pregunta anterior si la excepción fuera implícita? 
 	C
 3. ¿Se puede poner un bloque finally sin un bloque try? 
+		No, necesariamente han de existir try para usar finally
 4. ¿Se puede poner un bloque finally sin un bloque catch? 
-	No, necesariamente han de existir try y catch para usar finally
+		Si, el codigo de finally se ejecutara siempre
