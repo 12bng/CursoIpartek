@@ -1,4 +1,7 @@
-package aves;
+package aves.pajaros;
+
+import aves.Ave;
+import aves.Ave.sexoEleccion;
 
 public class Canario extends Ave {
 	float tamano;

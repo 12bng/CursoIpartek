@@ -1,7 +1,7 @@
 package aves;
 
 public class Ave {
-	enum sexoEleccion {
+	public enum sexoEleccion {
 		Macho, Hembra
 	}
 

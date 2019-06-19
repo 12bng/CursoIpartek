@@ -1,7 +1,10 @@
-package aves;
+package aves.tropicales;
+
+import aves.Ave;
+import aves.Ave.sexoEleccion;
 
 public class Loro extends Ave {
-	enum cardinales {
+	public enum cardinales {
 		Norte, Sur, Este, Oeste
 	}
 

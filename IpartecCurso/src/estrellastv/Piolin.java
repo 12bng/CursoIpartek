@@ -1,6 +1,11 @@
-package aves;
+package estrellastv;
 
-import aves.Loro.cardinales;
+import aves.Ave;
+import aves.DatosPersonales;
+import aves.Ave.sexoEleccion;
+import aves.pajaros.Canario;
+import aves.tropicales.Loro;
+import aves.tropicales.Loro.cardinales;
 
 public class Piolin extends Canario {
 	int numeroDePeliculas;
