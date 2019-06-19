@@ -1,0 +1,16 @@
+1. ¿Qué habría que hacer si un método que queremos llamar indica que lanza una
+excepción explícita? 
+		a) Aunque se recomienda capturar la excepción, no hay por qué hacer nada si no se
+		quiere. En dicho caso, si la excepción se lanza, la máquina virtual en última instancia
+		será la encargada de tratarla.
+	b) Hay que poner un bloque try y catch obligatoriamente.
+	c) Se puede bien indicar que se relanza en el método que hace la llamada usando una
+	cláusula throws o tratarla en dicho método mediante un bloque try y catch.
+	d) Hay que indicar que la excepción se relanza obligatoriamente usando una cláusula
+	throws. 
+
+2. ¿Qué opción escogerías en la pregunta anterior si la excepción fuera implícita? 
+	C
+3. ¿Se puede poner un bloque finally sin un bloque try? 
+4. ¿Se puede poner un bloque finally sin un bloque catch? 
+	No, necesariamente han de existir try y catch para usar finally
