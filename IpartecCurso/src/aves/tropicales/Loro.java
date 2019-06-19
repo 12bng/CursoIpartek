@@ -18,9 +18,7 @@ public class Loro extends Ave {
 	}
 
 	public void deDondeEres() {
-		try {
-		System.out.println(region.name());}
-		finally {}
+		System.out.println(region.name());
 		
 	}
 
