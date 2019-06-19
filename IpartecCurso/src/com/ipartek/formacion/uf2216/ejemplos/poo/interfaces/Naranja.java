@@ -9,7 +9,7 @@ public class Naranja extends Fruto implements Rodable, Comestible {
 
 	@Override
 	public void rodar() {
-		System.out.println("Rodando voy, rodando vengo (naranja)");		
+		System.out.println("Rodando voy, rodando vengo (naranja)");
 	}
 
 }

@@ -5,12 +5,12 @@ public class ExcepcionesPrueba {
 	public static void main(String[] args) {
 		String s = null;
 		int[] arr = null;
-		
+
 		System.out.println("Antes");
-		
+
 		try {
 			arr = new int[2];
-			//s.toUpperCase();
+			// s.toUpperCase();
 			arr[2] = 5;
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Error en el acceso al array");
@@ -21,7 +21,7 @@ public class ExcepcionesPrueba {
 		} finally {
 			System.out.println("Me ejecuto por cojones");
 		}
-		
+
 		System.out.println("Después");
 		System.out.println(arr[1]);
 	}

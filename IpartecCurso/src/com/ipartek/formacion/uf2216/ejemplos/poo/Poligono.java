@@ -8,12 +8,12 @@ public class Poligono {
 	public Iterable<Punto> getPuntos() {
 		return puntos;
 	}
-	
+
 	public Punto[] getPuntosClonados() {
 		Punto[] array = new Punto[puntos.size()];
-		
+
 		int i = 0;
-		for(Punto punto: puntos) {
+		for (Punto punto : puntos) {
 			array[i++] = new Punto(punto.getX(), punto.getY());
 		}
 //		Punto punto;
@@ -21,10 +21,10 @@ public class Poligono {
 //			punto = puntos.get(i);
 //			array[i] = new Punto(punto.getX(), punto.getY());
 //		}
-		
+
 		return array;
 	}
-	
+
 	public void add(Punto p) {
 		puntos.add(p);
 	}

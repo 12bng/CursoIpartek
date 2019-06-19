@@ -7,40 +7,39 @@ public class Punto { // extends Object
 
 	// Enumeración
 	enum Formatos {
-		SIMPLE,
-		COMPLEJO
+		SIMPLE, COMPLEJO
 	}
-	
+
 	// Variables de instancia (objeto)
 	private int x, y;
 
 	// Variables estáticas, "de clase" (compartidas)
 	private static int defaultX = 1;
 	private static int defaultY = 1;
-	
+
 	// Constructores
 	public Punto(int x, int y) {
 		setXY(x, y);
 	}
-	
+
 	public Punto(int xy) {
 		this(xy, xy);
 	}
-	
+
 	public Punto() {
-		this(defaultX,defaultY);
+		this(defaultX, defaultY);
 	}
-	
+
 	// Métodos de acceso (getters y setters)
 	public int getX() {
 		return x;
 	}
 
 	public void setX(int x) {
-		if(x > MAXIMO_X || x < MINIMO_X) {
+		if (x > MAXIMO_X || x < MINIMO_X) {
 			throw new PooException("No se admite el valor " + x);
 		}
-		
+
 		this.x = x;
 	}
 
@@ -51,32 +50,36 @@ public class Punto { // extends Object
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	@Override
 	public String toString() {
 		return transformarATexto(Formatos.COMPLEJO);
 	}
-	
+
 	public String toString(boolean formatoComplejo) {
-		return formatoComplejo ? this.transformarATexto(Formatos.COMPLEJO): this.transformarATexto(Formatos.SIMPLE);
+		return formatoComplejo ? this.transformarATexto(Formatos.COMPLEJO) : this.transformarATexto(Formatos.SIMPLE);
 	}
-	
+
 	public String toString(Formatos formato) {
 		return transformarATexto(formato);
 	}
-	
+
 	private String transformarATexto(Formatos formato) {
-		switch(formato) {
-		case SIMPLE: return String.format("%s,%s", getX(), getY());
-		case COMPLEJO: return String.format("P(%s,%s)", getX(), getY());
-		default: throw new RuntimeException("Formato no reconocido");
+		switch (formato) {
+		case SIMPLE:
+			return String.format("%s,%s", getX(), getY());
+		case COMPLEJO:
+			return String.format("P(%s,%s)", getX(), getY());
+		default:
+			throw new RuntimeException("Formato no reconocido");
 		}
 	}
-	
+
 	public void setXY(int x, int y) {
-		setX(x); setY(y);
+		setX(x);
+		setY(y);
 	}
-	
+
 	// Métodos estáticos
 	public static int getDefaultX() {
 		return defaultX;
