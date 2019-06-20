@@ -30,7 +30,16 @@ public class LibrosDAOColeccion implements Crudable<Libro> {
 	public Iterable<Libro> obtenerTodos() {
 		return libros;
 	}
-
+	@Override
+	public Iterable<Libro> obtenerExistentes(){
+		ArrayList<Libro> librosExistentes = new ArrayList<Libro>();
+			for(Libro libro:libros) {
+				if(!libro.isBorrado()) {
+					librosExistentes.add(libro);
+				}
+			}
+		return librosExistentes;
+	}
 	@Override
 	public Libro obtenerPorId(long id) {
 		for(Libro libro: libros) {
@@ -40,12 +49,11 @@ public class LibrosDAOColeccion implements Crudable<Libro> {
 		}
 		return null;
 	}
-
 	@Override
 	public void insertar(Libro libro) {
 		Libro libroEnLista = obtenerPorId(libro.getId());
-		if(libroEnLista!=null&&libroEnLista.isBorrado()) {
-			System.out.println("Ya existe un libro con esa ID, no es posible añadirlo.");
+		if(libroEnLista!=null) {
+			throw new LibroException("Ya existe un libro con esa ID, no es posible añadirlo. Si el ya existente esta borrado, trata de editarlo.");
 		}
 		else {
 			libros.add(libro);
@@ -58,14 +66,15 @@ public class LibrosDAOColeccion implements Crudable<Libro> {
 		int posicionLibro = buscarPosicionLibro(libro.getId());
 		if(posicionLibro>-1) {
 		libros.set(posicionLibro, libro);}
-		else {System.out.println("No hay libro ha modificar con esa ID");}
+		else {throw new LibroException("No hay libro a modificar con esa ID");}
 		
 	}
 
 	@Override
 	public void borrar(Libro libro) {
-		if(obtenerPorId(libro.getId()).getTitulo().equals(libro.getTitulo())) {libro.setIsBorrado(true);}
-		else {System.out.println("El libro con esa ID y titulo no existe");}
+		Libro libroABorrar = obtenerPorId(libro.getId());
+		if(libroABorrar.getTitulo().equals(libro.getTitulo())) {libroABorrar.setIsBorrado(true); System.out.println(libro + "Ha sido borrado");}
+		else {throw new LibroException("El libro con esa ID y titulo no existe");}
 		
 		
 	}
@@ -74,25 +83,16 @@ public class LibrosDAOColeccion implements Crudable<Libro> {
 	public void borrar(long id) {
 		Libro libro = obtenerPorId(id);
 	if(libro!=null) {libro.setIsBorrado(true);}
-	else {System.out.println("El libro con esa ID no existe");}
+	else {
+	throw new LibroException("El libro con esa ID no existe");	
+	//System.out.println("El libro con esa ID no existe");}
+	}
 	
 		
 	}
-//	public void comparar(Libro libro1, Libro libro2) {
-//		if(libro1.getId()==libro2.getId()) {
-//			
-//		}
-//	}
 	
 	private int buscarPosicionLibro(long id) {
 		int index=0;
-//		boolean noEncontrado=true;
-//		while(noEncontrado||index<libros.size()) {
-//			if(id==libros.get(index).getId()) {
-//				
-//			}
-//			index++;
-//		}
 		for(Libro libro: libros) {
 			if(libro.getId()==id) {
 				return index;
@@ -101,5 +101,6 @@ public class LibrosDAOColeccion implements Crudable<Libro> {
 		}
 		return -1;
 	}
+
 
 }

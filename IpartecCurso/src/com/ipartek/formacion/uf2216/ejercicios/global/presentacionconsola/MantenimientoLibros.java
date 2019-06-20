@@ -3,6 +3,7 @@ package com.ipartek.formacion.uf2216.ejercicios.global.presentacionconsola;
 import java.io.IOException;
 
 import com.ipartek.formacion.uf2216.ejercicios.global.accesodatos.Crudable;
+import com.ipartek.formacion.uf2216.ejercicios.global.accesodatos.LibroException;
 import com.ipartek.formacion.uf2216.ejercicios.global.accesodatos.LibrosDAOColeccion;
 import com.ipartek.formacion.uf2216.ejercicios.global.entidades.Libro;
 
@@ -30,7 +31,7 @@ public class MantenimientoLibros {
 				System.out.println("2. Modificar");
 				System.out.println("3. Borrar");
 				System.out.println("4. Listado");
-				System.out.println("5. Buscar por ID1");
+				System.out.println("5. Buscar por ID");
 				System.out.println("6. Terminar ejecución");
 
 				idLibro = -1;
@@ -43,8 +44,9 @@ public class MantenimientoLibros {
 				} catch (Exception e) {
 					opcion = 0;
 				}
-
-				if (opcion == 1) {
+				
+				//Añadir
+				if (opcion == 1) { 
 					System.out.println("1. Simple");
 					System.out.println("2. Completo");
 					inputTexto1 = br.readLine();
@@ -61,7 +63,9 @@ public class MantenimientoLibros {
 						System.out.println("Introduce el Título del libro a introducir.");
 						titulo = br.readLine();
 						Libro nuevoLibro = new Libro(idLibro, inputTexto1);
-						dao.insertar(nuevoLibro);
+						System.out.println(nuevoLibro.toString()+ "esta siendo añadido");
+						try{dao.insertar(nuevoLibro);}
+						catch(LibroException e) {System.out.println(e.getMessage());}
 					} else if (opcion == 2) {
 						System.out.println("Introduce el id del libro a introducir.");
 						inputTexto1 = br.readLine();
@@ -80,29 +84,33 @@ public class MantenimientoLibros {
 						genero = br.readLine();
 						System.out.println("Introduce la Edición del libro a introducir.");
 						edicion = br.readLine();
-
+						Libro nuevoLibro = new Libro(idLibro, titulo, ISBN, editorial, autor, descripcion, genero, edicion);
+						System.out.println(nuevoLibro.toStringCompleto()+ "esta siendo añadido");
+						try{dao.insertar(nuevoLibro);}
+						catch(LibroException e) {System.out.println(e.getMessage());}
 					}
-
+				//Modificar
 				} else if (opcion == 2) {
 					System.out.println("1. Simple");
 					System.out.println("2. Completo");
+					System.out.println("Si el libro con esa ID esta borrado, se dara de alta otra vez");
+					System.out.println("El ID ha de ser de un libro ya creado con anterioridad");
 					inputTexto1 = br.readLine();
 					opcion = Integer.parseInt(inputTexto1);
 					if (opcion == 1) {
 						System.out.println("Introduce el ID del libro a modificar.");
-						System.out.println("Si el libro con esa ID esta borrado, se dara de alta otra vez");
 						inputTexto1 = br.readLine();
 						idLibro = introduccionDeNumero(inputTexto1);
 						System.out.println("Introduce el Titulo del libro a modificar.");
 						titulo = br.readLine();
 						Libro nuevoLibro = new Libro(idLibro, titulo);
-						dao.modificar(nuevoLibro);
+						System.out.println(nuevoLibro.toString()+ "esta siendo modificado");
+						try{dao.modificar(nuevoLibro);}
+						catch(LibroException e) {System.out.println(e.getMessage());}
 					} else if (opcion == 2) {
-						// while(idLibro==-1) {
 						System.out.println("Introduce el id del libro a modificar.");
 						inputTexto1 = br.readLine();
 						idLibro = introduccionDeNumero(inputTexto1);
-						// }
 						System.out.println("Introduce el Título del libro a modificar.");
 						titulo = br.readLine();
 						System.out.println("Introduce el ISBN del libro a modificar.");
@@ -119,51 +127,102 @@ public class MantenimientoLibros {
 						edicion = br.readLine();
 						Libro nuevoLibro = new Libro(idLibro, titulo, ISBN, editorial, autor, descripcion, genero,
 								edicion);
-						dao.modificar(nuevoLibro);
+						System.out.println(nuevoLibro.toStringCompleto()+ "esta siendo modificado");
+						try{dao.modificar(nuevoLibro);}
+						catch(LibroException e) {System.out.println(e.getMessage());}
 
 					}
-
+				//Borrar
 				} else if (opcion == 3) {
-					System.out.println("Introduce el id del libro a borrar");
+					System.out.println("1. Por ID");
+					System.out.println("2. Por ID + Titulo");
+					inputTexto1 = br.readLine();
+					opcion = Integer.parseInt(inputTexto1);
+					if(opcion==1) {
+					System.out.println("Introduce el ID del libro a borrar");
 					inputTexto1 = br.readLine();
 					idLibro = introduccionDeNumero(inputTexto1);
-					dao.borrar(idLibro);
-//					estarDentroDeLoop = true;
-//					while(estarDentroDeLoop) {
-//						System.out.println("1.");
-//					if() {}
-//					else if() {}
-//					else if() {}
-//					else{}
-//					}
+					System.out.println("Libro con ID: "+idLibro+ " esta siendo borrado");
+					try{dao.borrar(idLibro);}
+					catch(LibroException e) {System.out.println(e.getMessage());}
+					}
+					else if(opcion==2) {
+						System.out.println("Introduce el ID del libro a borrar");
+						inputTexto1 = br.readLine();
+						idLibro = introduccionDeNumero(inputTexto1);
+						System.out.println("Introduce el Titulo del libro a borrar");
+						titulo = br.readLine();
+						Libro libroABorrar = new Libro(idLibro, titulo);
+						System.out.println(libroABorrar.toString()+ "esta siendo borrado");
+						try{dao.borrar(libroABorrar);}
+						catch(LibroException e) {System.out.println(e.getMessage());}
+					}
+
+				//Listado	
 				} else if (opcion == 4) {
-					System.out.println("1. Simple");
-					System.out.println("2. Completo");
-					System.out.println("2. Completo");
+					System.out.println("1. Disponibles");
+					System.out.println("2. Todos");
 					inputTexto1 = br.readLine();
 					try {
 						opcion = Integer.parseInt(inputTexto1);
 					} catch (Exception e) {
 						opcion = 0;
 					}
-					if (opcion == 1) {
-						for (Libro libro : dao.obtenerTodos()) {
-							System.out.println(libro.toString());
+					if(opcion==1) {
+						
+						System.out.println("1. Simple");
+						System.out.println("2. Completo");
+						inputTexto1 = br.readLine();
+						try {
+							opcion = Integer.parseInt(inputTexto1);
+						} catch (Exception e) {
+							opcion = 0;}
+						if(opcion==1) {
+						for (Libro libro : dao.obtenerExistentes()) {
+							System.out.println(libro);}
 						}
+						else if(opcion==2) {
+							for (Libro libro : dao.obtenerExistentes()) {
+								System.out.println(libro.toStringCompleto());}
+						}
+						
+					}
+					else if(opcion==2) {
+						System.out.println("1. Simple");
+						System.out.println("2. Completo");
+						inputTexto1 = br.readLine();
+						try {
+							opcion = Integer.parseInt(inputTexto1);
+						} catch (Exception e) {
+							opcion = 0;}
+						if(opcion==1) {
+						for (Libro libro : dao.obtenerTodos()) {
+							System.out.println(libro);}
+						}
+						else if(opcion==2) {
+							for (Libro libro : dao.obtenerTodos()) {
+								System.out.println(libro.toStringCompleto());}
+						}
+						
 					}
 
-					else if (opcion == 2) {
-						for (Libro libro : dao.obtenerTodos()) {
-							System.out.println(libro.toStringCompleto());
-						}
-					}
-
+				//Buscar por ID
 				} else if (opcion == 5) {
-
+					System.out.println("Introduce el id del libro a buscar");
+					inputTexto1 = br.readLine();
+					idLibro = introduccionDeNumero(inputTexto1);
+					Libro libroBuscado=dao.obtenerPorId(idLibro);
+					if(libroBuscado==null) {
+						System.out.println("No existe ningun libro con esa ID");
+					}
+					else {System.out.println(libroBuscado.toString());}
+				//Cerrar programa
 				} else if (opcion == 6) {
-					terminar = true;
-				} else {
-					System.out.println("No has introducido una opcion valida, introduce otra vez un numero.");
+					terminar = true;		
+				//Ninguna de las opciones anteriores
+				} 
+				else {
+					System.out.println("No has introducido una opcion valida, introduce un numero.");
 				}
 
 			} catch (IOException e) {

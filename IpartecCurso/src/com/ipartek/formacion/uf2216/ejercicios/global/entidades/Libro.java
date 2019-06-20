@@ -36,7 +36,7 @@ public class Libro {
 	}
 	public String toStringCompleto() {
 		return "Libro [id=" + id + ", titulo=" + titulo + ", ISBN=" + ISBN + ", Editorial=" + Editorial + ", Autor="
-				+ Autor + ", Descripción=" + Descripción + ", Género=" + Género + ", Edición=" + Edición + "]";
+				+ Autor + ", Descripción=" + Descripción + ", Género=" + Género + ", Edición=" + Edición + "Borrado=" + borrado +"]";
 	}
 	public long getId() {
 		return id;
