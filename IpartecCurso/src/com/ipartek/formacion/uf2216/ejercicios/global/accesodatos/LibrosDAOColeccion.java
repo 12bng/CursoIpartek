@@ -43,8 +43,9 @@ public class LibrosDAOColeccion implements Crudable<Libro> {
 
 	@Override
 	public void insertar(Libro libro) {
-		if(obtenerPorId(libro.getId())!=null) {
-			System.out.println("Ya existe un libro con esa id, no es posible añadirlo.");
+		Libro libroEnLista = obtenerPorId(libro.getId());
+		if(libroEnLista!=null&&libroEnLista.isBorrado()) {
+			System.out.println("Ya existe un libro con esa ID, no es posible añadirlo.");
 		}
 		else {
 			libros.add(libro);
@@ -54,13 +55,18 @@ public class LibrosDAOColeccion implements Crudable<Libro> {
 
 	@Override
 	public void modificar(Libro libro) {
-		libros.set(buscarPosicionLibro(libro.getId()), libro);
+		int posicionLibro = buscarPosicionLibro(libro.getId());
+		if(posicionLibro>-1) {
+		libros.set(posicionLibro, libro);}
+		else {System.out.println("No hay libro ha modificar con esa ID");}
 		
 	}
 
 	@Override
 	public void borrar(Libro libro) {
-		borrar(libro.getId());
+		if(obtenerPorId(libro.getId()).getTitulo().equals(libro.getTitulo())) {libro.setIsBorrado(true);}
+		else {System.out.println("El libro con esa ID y titulo no existe");}
+		
 		
 	}
 
@@ -68,7 +74,7 @@ public class LibrosDAOColeccion implements Crudable<Libro> {
 	public void borrar(long id) {
 		Libro libro = obtenerPorId(id);
 	if(libro!=null) {libro.setIsBorrado(true);}
-	else {System.out.println("El libro con esa id no existe");}
+	else {System.out.println("El libro con esa ID no existe");}
 	
 		
 	}

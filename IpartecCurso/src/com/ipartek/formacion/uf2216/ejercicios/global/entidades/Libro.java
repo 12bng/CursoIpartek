@@ -5,18 +5,38 @@ public class Libro {
 	private long id;
 	private String titulo;
 	private String ISBN, Editorial, Autor, Descripción, Género, Edición;
-	private Boolean isBorrado = false;
+	private Boolean borrado = false;
 	
 	
 	public Libro(long id, String titulo) {
-		super();
 		this.id = id;
 		this.titulo = titulo;
 	}
+	
+
+
+	public Libro(long id, String titulo, String iSBN, String editorial, String autor, String descripción, String género,
+			String edición) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		ISBN = iSBN;
+		Editorial = editorial;
+		Autor = autor;
+		Descripción = descripción;
+		Género = género;
+		Edición = edición;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Libro [id=" + id + ", titulo=" + titulo + "]";
+	}
+	public String toStringCompleto() {
+		return "Libro [id=" + id + ", titulo=" + titulo + ", ISBN=" + ISBN + ", Editorial=" + Editorial + ", Autor="
+				+ Autor + ", Descripción=" + Descripción + ", Género=" + Género + ", Edición=" + Edición + "]";
 	}
 	public long getId() {
 		return id;
@@ -78,12 +98,12 @@ public class Libro {
 		Edición = edición;
 	}
 
-	public Boolean getIsBorrado() {
-		return isBorrado;
+	public Boolean isBorrado() {
+		return borrado;
 	}
 
 	public void setIsBorrado(Boolean isBorrado) {
-		this.isBorrado = isBorrado;
+		this.borrado = isBorrado;
 	}
 
 	public void setId(long id) {
