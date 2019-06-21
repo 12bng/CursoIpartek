@@ -1,14 +1,21 @@
 package com.ipartek.formacion.uf2216.ejercicios.global.accesodatos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.stream.IntStream;
 
 import com.ipartek.formacion.uf2216.ejercicios.global.entidades.Libro;
 
-public class LibrosDAOColeccion implements Crudable<Libro> {
+public class LibrosDAOColeccion implements Crudable<Libro>, Serializable {
+
+
 	// Data
 	// Access
 	// Object
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8617334621245516195L;
 
 	// Inicio patrón Singleton
 	private LibrosDAOColeccion() {

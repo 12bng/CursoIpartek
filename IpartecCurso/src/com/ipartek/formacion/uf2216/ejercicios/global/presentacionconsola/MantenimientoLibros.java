@@ -1,31 +1,38 @@
 package com.ipartek.formacion.uf2216.ejercicios.global.presentacionconsola;
 
-import java.io.BufferedWriter;
-import java.io.File;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import com.ipartek.formacion.uf2216.ejercicios.global.accesodatos.Crudable;
 import com.ipartek.formacion.uf2216.ejercicios.global.accesodatos.LibroException;
 import com.ipartek.formacion.uf2216.ejercicios.global.accesodatos.LibrosDAOColeccion;
 import com.ipartek.formacion.uf2216.ejercicios.global.entidades.Libro;
 
-public class MantenimientoLibros {
-	private static final String RUTA_FICHERO = "C:\\Users\\curso\\Documents\\pruebas";
+public class MantenimientoLibros  {
+	private static final String RUTA_FICHERO = "C:\\Users\\curso\\Documents\\pruebas\\fichero.txt";
+	private static final String RUTA_FICHERO_BINARIO = "C:\\Users\\curso\\Documents\\pruebas\\fichero.dat";
+	private static final String RUTA_FICHERO_CSV = "C:\\Users\\curso\\Documents\\pruebas\\fichero.csv";
 	private static final boolean AUTO_FLUSH = true;
-	private static final boolean APPEND = true;
+	private static final boolean APPEND = false; //true = mantiene lo que contenia anteriormente el fichero; false = guarda lo que le metemos la ultima vez
+	private static final String SEPARATOR = ",";
+
 	
 	static java.io.InputStreamReader isr = new java.io.InputStreamReader(System.in);
 	static java.io.BufferedReader br = new java.io.BufferedReader(isr);
-
 	public static void main(String[] args) {
 		Crudable<Libro> dao = LibrosDAOColeccion.getInstance();
 		Boolean terminar = false;
 		String inputTexto1, titulo, ISBN, editorial, autor, descripcion, genero, edicion;
 		int opcion, idLibro;
-		dao.insertar(new Libro(1, "Título 1"));
-		dao.insertar(new Libro(2, "Título 2"));
 
 		for (Libro libro : dao.obtenerTodos()) {
 			System.out.println(libro);
@@ -40,11 +47,12 @@ public class MantenimientoLibros {
 				System.out.println("3. Borrar");
 				System.out.println("4. Listado");
 				System.out.println("5. Buscar por ID");
-				System.out.println("6. Guardar");
-				System.out.println("7. Cargar");
-				System.out.println("8. Importar (CSV)");
+				System.out.println("6. Guardar txt");
+				System.out.println("7. Guardar binario");
+				System.out.println("8. Cargar binario");
 				System.out.println("9. Exportar (CSV)");
-				System.out.println("10. Terminar ejecución");
+				System.out.println("10. Importar (CSV)");
+				System.out.println("11. Terminar ejecución");
 
 				idLibro = -1;
 
@@ -74,7 +82,7 @@ public class MantenimientoLibros {
 						idLibro = introduccionDeNumero(inputTexto1);
 						System.out.println("Introduce el Título del libro a introducir.");
 						titulo = br.readLine();
-						Libro nuevoLibro = new Libro(idLibro, inputTexto1);
+						Libro nuevoLibro = new Libro(idLibro, titulo);
 						System.out.println(nuevoLibro.toString() + "esta siendo añadido");
 						try {
 							dao.insertar(nuevoLibro);
@@ -252,11 +260,12 @@ public class MantenimientoLibros {
 						}
 					}
 					else if (opcion == 6) {
-						//Guardar
+						//Guardar txt
+
 						FileWriter fw = new FileWriter(RUTA_FICHERO, APPEND);
 						PrintWriter pw = new PrintWriter(fw, AUTO_FLUSH);
 						for (Libro libro : dao.obtenerTodos()) {
-							pw.println(libro.toStringCompleto());
+							pw.println(libro);
 						}
 						
 						System.out.println("Creando fichero txt en: " + RUTA_FICHERO);
@@ -264,16 +273,73 @@ public class MantenimientoLibros {
 						fw.close();
 					}
 					else if (opcion == 7) {
-						//Cargar
+						//Guardar binario
+						
+						FileOutputStream fos = null;
+				        ObjectOutputStream salida = null;
+
+				        try {  	
+				            fos = new FileOutputStream(RUTA_FICHERO_BINARIO,APPEND);
+				            salida = new ObjectOutputStream(fos);
+				            System.out.println("Creando fichere binario en: "+RUTA_FICHERO_BINARIO);
+							salida.writeObject(dao);
+				        	fos.close();
+				        	salida.close();
+				        }
+				        catch (IOException e) {
+				            e.printStackTrace();
+				        }
 					}
 					else if (opcion == 8) {
-						//Importar(CSV)
+						//Cargar binario
+						FileInputStream fis = null;
+				        ObjectInputStream entrada = null;
+				        try {
+						fis=new FileInputStream( RUTA_FICHERO_BINARIO );
+						entrada=new ObjectInputStream(fis);
+								dao=(Crudable<Libro>) entrada.readObject();
+				        }
+				        catch(IOException e) {
+				            e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					else if (opcion == 9) {
 						//Exportar(CSV)
+						FileWriter fw = new FileWriter(RUTA_FICHERO_CSV, APPEND);
+						PrintWriter pw = new PrintWriter(fw, AUTO_FLUSH);
+						pw.println("ID,Titulo,ISBN,Editorial,Autor,Descripcion,Genero,Edicion,Borrado");
+						for (Libro libro : dao.obtenerTodos()) {
+						pw.println((libro.getId()+","+libro.getTitulo()+","+libro.getISBN()+","+libro.getEditorial()+","+libro.getAutor()+","+libro.getDescripcion()+","+libro.getGenero()+","+libro.getEdicion()+","+libro.isBorrado()));
+						}
+						
+					}
+					else if (opcion == 10) {
+						//Importar(CSV)
+						//TODO hacer que cargue bien linea por linea
+					      
+					      try {
+					         
+					    	 BufferedReader br =new BufferedReader(new FileReader(RUTA_FICHERO_CSV));
+					         String line = br.readLine();
+					         line = br.readLine();
+					         while (null!=line) {
+					            String [] fields = line.split(SEPARATOR);
+					            line = br.readLine();
+					            Libro nuevoLibro = new Libro(Integer.parseInt(fields[0]), fields[1], fields[2], fields[3], fields[4], fields[5], fields[6],
+					            		fields[7]);
+					            nuevoLibro.setIsBorrado(Boolean.parseBoolean(fields[8]));
+					            dao.insertar(nuevoLibro);
+					         }
+					         System.out.println("Importando datos de "+RUTA_FICHERO_CSV);
+					      }catch(Exception e) {
+					    	  e.printStackTrace();
+					      }
 					}
 					// Cerrar programa
-					else if (opcion == 10) {
+					else if (opcion == 11) {
 						terminar = true;
 					}
 					// Ninguna de las opciones anteriores

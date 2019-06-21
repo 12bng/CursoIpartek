@@ -1,6 +1,13 @@
 package com.ipartek.formacion.uf2216.ejercicios.global.entidades;
 
-public class Libro {
+import java.io.Serializable;
+
+public class Libro implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6962854947567284865L;
 	// TODO: ISBN, Editorial, Autor, Descripción, Género, Edición, IsBorrado, Fecha
 	// de impresión
 	private long id;
@@ -73,7 +80,7 @@ public class Libro {
 		Autor = autor;
 	}
 
-	public String getDescripción() {
+	public String getDescripcion() {
 		return Descripción;
 	}
 
@@ -81,7 +88,7 @@ public class Libro {
 		Descripción = descripción;
 	}
 
-	public String getGénero() {
+	public String getGenero() {
 		return Género;
 	}
 
@@ -89,7 +96,7 @@ public class Libro {
 		Género = género;
 	}
 
-	public String getEdición() {
+	public String getEdicion() {
 		return Edición;
 	}
 
