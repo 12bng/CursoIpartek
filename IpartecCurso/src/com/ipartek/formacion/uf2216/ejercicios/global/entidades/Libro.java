@@ -52,57 +52,57 @@ public class Libro implements Serializable {
 		return titulo;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+//	public void setTitulo(String titulo) {
+//		this.titulo = titulo;
+//	}
 
 	public String getISBN() {
 		return ISBN;
 	}
 
-	public void setISBN(String iSBN) {
-		ISBN = iSBN;
-	}
+//	public void setISBN(String iSBN) {
+//		ISBN = iSBN;
+//	}
 
 	public String getEditorial() {
 		return Editorial;
 	}
 
-	public void setEditorial(String editorial) {
-		Editorial = editorial;
-	}
+//	public void setEditorial(String editorial) {
+//		Editorial = editorial;
+//	}
 
 	public String getAutor() {
 		return Autor;
 	}
 
-	public void setAutor(String autor) {
-		Autor = autor;
-	}
+//	public void setAutor(String autor) {
+//		Autor = autor;
+//	}
 
 	public String getDescripcion() {
 		return Descripción;
 	}
 
-	public void setDescripción(String descripción) {
-		Descripción = descripción;
-	}
+//	public void setDescripción(String descripción) {
+//		Descripción = descripción;
+//	}
 
 	public String getGenero() {
 		return Género;
 	}
 
-	public void setGénero(String género) {
-		Género = género;
-	}
+//	public void setGénero(String género) {
+//		Género = género;
+//	}
 
 	public String getEdicion() {
 		return Edición;
 	}
 
-	public void setEdición(String edición) {
-		Edición = edición;
-	}
+//	public void setEdición(String edición) {
+//		Edición = edición;
+//	}
 
 	public Boolean isBorrado() {
 		return borrado;
@@ -112,8 +112,8 @@ public class Libro implements Serializable {
 		this.borrado = isBorrado;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
+//	public void setId(long id) {
+//		this.id = id;
+//	}
 
 }
