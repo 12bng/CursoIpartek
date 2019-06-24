@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
 
 import com.ipartek.formacion.uf2216.ejercicios.global.accesodatos.Crudable;
 import com.ipartek.formacion.uf2216.ejercicios.global.accesodatos.LibroException;
@@ -31,15 +30,13 @@ public class MantenimientoLibros  {
 	public static void main(String[] args) {
 		Crudable<Libro> dao = LibrosDAOColeccion.getInstance();
 		Boolean terminar = false;
-		String inputTexto1, titulo, ISBN, editorial, autor, descripcion, genero, edicion;
+		String inputTexto1, titulo, ISBN, editorial, autor, descripcion, genero, edicion, añoImpresion;
 		int opcion, idLibro;
 
 		for (Libro libro : dao.obtenerTodos()) {
 			System.out.println(libro);
 		}
 
-		// TODO Menú con insertar, modificar, borrar, listar, buscar por id
-		// TODO Buscar por titulo
 		while (!terminar) {
 			try {
 				System.out.println("1. Añadir");
@@ -107,8 +104,10 @@ public class MantenimientoLibros  {
 						genero = br.readLine();
 						System.out.println("Introduce la Edición del libro a introducir.");
 						edicion = br.readLine();
+						System.out.println("Introduce el año de Impresion del libro a introducir. dd/mm/aaaa");
+						añoImpresion=br.readLine();
 						Libro nuevoLibro = new Libro(idLibro, titulo, ISBN, editorial, autor, descripcion, genero,
-								edicion);
+								edicion,añoImpresion);
 						System.out.println(nuevoLibro.toStringCompleto() + "esta siendo añadido");
 						try {
 							dao.insertar(nuevoLibro);
@@ -155,8 +154,10 @@ public class MantenimientoLibros  {
 							genero = br.readLine();
 							System.out.println("Introduce la Edición del libro a modificar.");
 							edicion = br.readLine();
+							System.out.println("Introduce el año de Impresion del libro a modificar. dd/mm/aaaa");
+							añoImpresion=br.readLine();
 							Libro nuevoLibro = new Libro(idLibro, titulo, ISBN, editorial, autor, descripcion, genero,
-									edicion);
+									edicion,añoImpresion);
 							System.out.println(nuevoLibro.toStringCompleto() + "esta siendo modificado");
 							try {
 								dao.modificar(nuevoLibro);
@@ -302,24 +303,24 @@ public class MantenimientoLibros  {
 				        catch(IOException e) {
 				            e.printStackTrace();
 					} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 					else if (opcion == 9) {
 						//Exportar(CSV)
+						//0:ID 1:Titulo 2:ISBN 3:Editorial 4:Autor 5:Descripcion 6:Genero 7:Edicion 8:Fecha 9:Borrado
 						FileWriter fw = new FileWriter(RUTA_FICHERO_CSV, APPEND);
 						PrintWriter pw = new PrintWriter(fw, AUTO_FLUSH);
-						pw.println("ID,Titulo,ISBN,Editorial,Autor,Descripcion,Genero,Edicion,Borrado");
+						pw.println("ID,Titulo,ISBN,Editorial,Autor,Descripcion,Genero,Edicion,Fecha,Borrado");
 						for (Libro libro : dao.obtenerTodos()) {
-						pw.println((libro.getId()+","+libro.getTitulo()+","+libro.getISBN()+","+libro.getEditorial()+","+libro.getAutor()+","+libro.getDescripcion()+","+libro.getGenero()+","+libro.getEdicion()+","+libro.isBorrado()));
+						pw.println((libro.getId()+","+libro.getTitulo()+","+libro.getISBN()+","+libro.getEditorial()+","+libro.getAutor()+","+libro.getDescripcion()+","+libro.getGenero()+","+libro.getEdicion()+","+libro.getFecha()+","+libro.isBorrado()));
 						}
+						pw.close();
 						
 					}
 					else if (opcion == 10) {
 						//Importar(CSV)
-						//TODO hacer que cargue bien linea por linea
-					      
+						//0:ID 1:Titulo 2:ISBN 3:Editorial 4:Autor 5:Descripcion 6:Genero 7:Edicion 8:Fecha 9:Borrado
 					      try {
 					         
 					    	 BufferedReader br =new BufferedReader(new FileReader(RUTA_FICHERO_CSV));
@@ -327,15 +328,20 @@ public class MantenimientoLibros  {
 					         line = br.readLine();
 					         while (null!=line) {
 					            String [] fields = line.split(SEPARATOR);
+//									            for(String datos: fields) {
+//									            	System.out.println(datos);
+//									            }
 					            line = br.readLine();
 					            Libro nuevoLibro = new Libro(Integer.parseInt(fields[0]), fields[1], fields[2], fields[3], fields[4], fields[5], fields[6],
-					            		fields[7]);
-					            nuevoLibro.setIsBorrado(Boolean.parseBoolean(fields[8]));
-					            dao.insertar(nuevoLibro);
+					            		fields[7],fields[8]);
+					            nuevoLibro.setIsBorrado(Boolean.parseBoolean(fields[9]));
+					            try{dao.insertar(nuevoLibro);}
+					            catch(LibroException e) {dao.modificar(nuevoLibro);}
 					         }
+					         br.close();
 					         System.out.println("Importando datos de "+RUTA_FICHERO_CSV);
 					      }catch(Exception e) {
-					    	  e.printStackTrace();
+					    	 e.printStackTrace();
 					      }
 					}
 					// Cerrar programa
@@ -348,7 +354,6 @@ public class MantenimientoLibros  {
 					}
 				}
 			 catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

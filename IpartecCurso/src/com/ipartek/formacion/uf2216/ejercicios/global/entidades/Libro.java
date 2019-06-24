@@ -2,17 +2,17 @@ package com.ipartek.formacion.uf2216.ejercicios.global.entidades;
 
 import java.io.Serializable;
 
+import ejercicios1.Fecha;
+import ejercicios1.FechaException;
+
 public class Libro implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6962854947567284865L;
-	// TODO: ISBN, Editorial, Autor, Descripción, Género, Edición, IsBorrado, Fecha
-	// de impresión
+
 	private long id;
 	private String titulo;
 	private String ISBN, Editorial, Autor, Descripción, Género, Edición;
+	private Fecha fechaImpresion = new Fecha();
 	private Boolean borrado = false;
 
 	public Libro(long id, String titulo) {
@@ -21,8 +21,7 @@ public class Libro implements Serializable {
 	}
 
 	public Libro(long id, String titulo, String iSBN, String editorial, String autor, String descripción, String género,
-			String edición) {
-		super();
+			String edición, String date) {
 		this.id = id;
 		this.titulo = titulo;
 		ISBN = iSBN;
@@ -31,16 +30,33 @@ public class Libro implements Serializable {
 		Descripción = descripción;
 		Género = género;
 		Edición = edición;
+		fechaImpresion.setDateFromString(date);
+
 	}
+	public Libro(long id, String titulo, String iSBN, String editorial, String autor, String descripción, String género,
+			String edición) {
+		this.id = id;
+		this.titulo = titulo;
+		ISBN = iSBN;
+		Editorial = editorial;
+		Autor = autor;
+		Descripción = descripción;
+		Género = género;
+		Edición = edición;
+		fechaImpresion.setDateFromString("00/00/0000");
+		
+
+	}
+
 
 	@Override
 	public String toString() {
-		return "Libro [id=" + id + ", titulo=" + titulo + "]";
+		return "Libro [ID=" + id + ", Titulo=" + titulo + "]";
 	}
 
 	public String toStringCompleto() {
-		return "Libro [id=" + id + ", titulo=" + titulo + ", ISBN=" + ISBN + ", Editorial=" + Editorial + ", Autor="
-				+ Autor + ", Descripción=" + Descripción + ", Género=" + Género + ", Edición=" + Edición + "Borrado="
+		return "Libro [ID=" + id + ", Titulo=" + titulo + ", ISBN=" + ISBN + ", Editorial=" + Editorial + ", Autor="
+				+ Autor + ", Descripción=" + Descripción + ", Género=" + Género + ", Edición=" + Edición +", Fecha impresión=" + fechaImpresion.toString() + ", Borrado="
 				+ borrado + "]";
 	}
 
@@ -52,68 +68,40 @@ public class Libro implements Serializable {
 		return titulo;
 	}
 
-//	public void setTitulo(String titulo) {
-//		this.titulo = titulo;
-//	}
-
 	public String getISBN() {
 		return ISBN;
 	}
-
-//	public void setISBN(String iSBN) {
-//		ISBN = iSBN;
-//	}
 
 	public String getEditorial() {
 		return Editorial;
 	}
 
-//	public void setEditorial(String editorial) {
-//		Editorial = editorial;
-//	}
-
 	public String getAutor() {
 		return Autor;
 	}
-
-//	public void setAutor(String autor) {
-//		Autor = autor;
-//	}
 
 	public String getDescripcion() {
 		return Descripción;
 	}
 
-//	public void setDescripción(String descripción) {
-//		Descripción = descripción;
-//	}
-
 	public String getGenero() {
 		return Género;
 	}
-
-//	public void setGénero(String género) {
-//		Género = género;
-//	}
 
 	public String getEdicion() {
 		return Edición;
 	}
 
-//	public void setEdición(String edición) {
-//		Edición = edición;
-//	}
-
 	public Boolean isBorrado() {
 		return borrado;
+	}
+	public String getFecha() {
+		return fechaImpresion.toString();
 	}
 
 	public void setIsBorrado(Boolean isBorrado) {
 		this.borrado = isBorrado;
 	}
 
-//	public void setId(long id) {
-//		this.id = id;
-//	}
 
 }

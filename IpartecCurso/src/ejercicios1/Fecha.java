@@ -21,7 +21,7 @@ public class Fecha {
 
 	}
 
-	public Fecha(int año, int mes, int dia) {
+	public Fecha(int dia, int mes, int año) {
 		setAño(año);
 		setMes(mes);
 		setDia(dia);
@@ -79,7 +79,7 @@ public class Fecha {
 		this.dia = dia;
 	}
 
-	public void set(int año, int mes, int dia) {
+	public void set(int dia, int mes, int año) {
 		setAño(año);
 		setMes(mes);
 		setDia(dia);
@@ -111,6 +111,12 @@ public class Fecha {
 			esIgual = false;
 		}
 		return esIgual;
+
+	}
+	public void setDateFromString(String fecha) {
+		String[] splitDate = fecha.split("/");
+		try{set(Integer.parseInt(splitDate[0]), Integer.parseInt(splitDate[1]), Integer.parseInt(splitDate[2]));}
+		catch(ArrayIndexOutOfBoundsException e) {throw new FechaException("El formato de fecha introducido no es correcto 'dd/mm/aaaa'");}
 
 	}
 
