@@ -12,9 +12,6 @@ public class LibrosDAOColeccion implements Crudable<Libro>, Serializable {
 	// Access
 	// Object
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8617334621245516195L;
 
 	// Inicio patrón Singleton
@@ -66,7 +63,7 @@ public class LibrosDAOColeccion implements Crudable<Libro>, Serializable {
 		if (libroEnLista != null) {
 			throw new LibroException(
 					"Ya existe un libro con esa ID, no es posible añadirlo. Si el ya existente esta borrado, trata de editarlo.");
-		} else {
+		} else if(libro.getId()>0){
 			libros.add(libro);
 		}
 
